@@ -1,0 +1,24 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Build Docker Compose Stack
+        run: docker-compose -f docker-compose.yml build
+
+      # Add testing steps here, for example:
+      # - name: Run Backend Tests
+      #   run: docker-compose run backend pytest
+      
+      # - name: Run Frontend Tests
+      #   run: docker-compose run frontend npm test
