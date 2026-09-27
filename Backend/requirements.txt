@@ -1,12 +1,17 @@
-Flask==3.0.0
+fastapi
+uvicorn
+python-multipart
 python-dotenv==1.0.0
-gunicorn==21.2.0
-
 # Preprocessing dependencies
 numpy
 rasterio
 Pillow
 pydantic
+pydantic-settings
 
 # Testing dependencies
 pytest==8.0.0
+
+langchain-groq
+langchain-core
+langgraph
