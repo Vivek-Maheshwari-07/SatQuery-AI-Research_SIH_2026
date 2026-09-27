@@ -1,3 +1,12 @@
 Flask==3.0.0
 python-dotenv==1.0.0
 gunicorn==21.2.0
+
+# Preprocessing dependencies
+numpy
+rasterio
+Pillow
+pydantic
+
+# Testing dependencies
+pytest==8.0.0
