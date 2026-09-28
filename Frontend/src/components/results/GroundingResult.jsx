@@ -71,7 +71,7 @@ export function GroundingResult({
         {image && (
           <div className="h-96 w-full rounded-lg overflow-hidden border border-border">
             <ImageViewer src={image} alt={query || 'Grounding result'}>
-              <BoundingBoxOverlay boxes={boxes} color="#2563EB" />
+              <BoundingBoxOverlay boxes={boxes} color="#155EEF" />
             </ImageViewer>
           </div>
         )}

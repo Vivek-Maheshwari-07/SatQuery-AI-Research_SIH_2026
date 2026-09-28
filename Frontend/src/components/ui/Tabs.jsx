@@ -45,14 +45,44 @@ export function Tabs({
     }
   };
 
+  const handleKeyDown = (e, currentIndex) => {
+    const enabledTabs = items.filter((t) => !t.disabled);
+    if (enabledTabs.length === 0) return;
+
+    let targetTab = null;
+
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+      e.preventDefault();
+      const currentEnabledIndex = enabledTabs.findIndex((t) => t.id === items[currentIndex].id);
+      const nextIndex = (currentEnabledIndex + 1) % enabledTabs.length;
+      targetTab = enabledTabs[nextIndex];
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      const currentEnabledIndex = enabledTabs.findIndex((t) => t.id === items[currentIndex].id);
+      const prevIndex = (currentEnabledIndex - 1 + enabledTabs.length) % enabledTabs.length;
+      targetTab = enabledTabs[prevIndex];
+    } else if (e.key === 'Home') {
+      e.preventDefault();
+      targetTab = enabledTabs[0];
+    } else if (e.key === 'End') {
+      e.preventDefault();
+      targetTab = enabledTabs[enabledTabs.length - 1];
+    }
+
+    if (targetTab && onChange) {
+      onChange(targetTab.id);
+    }
+  };
+
   return (
     <div
       role="tablist"
+      aria-orientation="horizontal"
       className={`flex items-center flex-wrap ${
         containerStyles[variant] || containerStyles.default
       } ${className}`}
     >
-      {items.map((tab) => {
+      {items.map((tab, idx) => {
         const isActive = activeTab === tab.id;
         const Icon = tab.icon;
 
@@ -62,9 +92,11 @@ export function Tabs({
             role="tab"
             type="button"
             aria-selected={isActive}
+            tabIndex={isActive ? 0 : -1}
             disabled={tab.disabled}
+            onKeyDown={(e) => handleKeyDown(e, idx)}
             onClick={() => !tab.disabled && onChange?.(tab.id)}
-            className={`inline-flex items-center text-xs md:text-sm px-3.5 py-2 transition-all duration-150 focus:outline-none focus:ring-1 focus:ring-primary ${getItemStyles(
+            className={`inline-flex items-center text-xs md:text-sm px-3.5 py-2 transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary ${getItemStyles(
               isActive,
               tab.disabled
             )}`}

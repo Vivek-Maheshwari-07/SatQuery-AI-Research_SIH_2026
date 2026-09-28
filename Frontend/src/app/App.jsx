@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, useLocation, useNavigate } from 'react-router-dom';
 import AppShell from '../components/layout/AppShell';
 import AppRoutes from './routes';
 import { NAVIGATION_ITEMS } from './navigation';
-
+import ErrorBoundary from '../components/ui/ErrorBoundary';
 import AppProviders from './providers';
 
 function AppLayout() {
@@ -16,6 +16,20 @@ function AppLayout() {
       (item.path !== '/' && location.pathname.startsWith(item.path))
   );
 
+  useEffect(() => {
+    const titles = {
+      '/': 'Dashboard | SatQuery AI',
+      '/analyze': 'Analyze | SatQuery AI',
+      '/results': 'Results | SatQuery AI',
+      '/history': 'History | SatQuery AI',
+      '/reports': 'Reports | SatQuery AI',
+      '/settings': 'Settings | SatQuery AI',
+    };
+    document.title =
+      titles[location.pathname] ||
+      (currentItem ? `${currentItem.label} | SatQuery AI` : 'Page Not Found | SatQuery AI');
+  }, [location.pathname, currentItem]);
+
   const handleNavigate = (item) => {
     navigate(item.path);
   };
@@ -27,7 +41,9 @@ function AppLayout() {
       onNavigate={handleNavigate}
       pageTitle={currentItem ? currentItem.label : 'SatQuery AI'}
     >
-      <AppRoutes />
+      <ErrorBoundary>
+        <AppRoutes />
+      </ErrorBoundary>
     </AppShell>
   );
 }
