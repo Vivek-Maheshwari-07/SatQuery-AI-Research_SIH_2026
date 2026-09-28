@@ -5,17 +5,13 @@ import PageContainer from '../../components/layout/PageContainer';
 import PageHeader from '../../components/layout/PageHeader';
 import Card from '../../components/ui/Card';
 import Button from '../../components/ui/Button';
-import ErrorState from '../../components/ui/ErrorState';
 import ImageUploader from '../../components/imagery/ImageUploader';
 import ImagePreview from '../../components/imagery/ImagePreview';
 import QueryInput from '../../components/query/QueryInput';
 import AnalysisModeSelector from '../../components/analysis/AnalysisModeSelector';
 import AnalysisStatus from '../../components/analysis/AnalysisStatus';
-import AnalysisHeader from '../../components/analysis/AnalysisHeader';
-import QuerySummary from '../../components/query/QuerySummary';
-import ExecutionTrace from '../../components/analysis/ExecutionTrace';
+import AnalysisOutput from '../../components/analysis/AnalysisOutput';
 import AnalysisActions from '../../components/analysis/AnalysisActions';
-import MeasurementResult from '../../components/results/MeasurementResult';
 import { useImageUpload } from '../../hooks/useImageUpload';
 import { useAnalysis } from '../../hooks/useAnalysis';
 import {
@@ -24,12 +20,11 @@ import {
   getConfigurationById,
 } from '../../app/analysisConfig';
 import { validateAnalysisInput } from '../../utils/validators';
-import { RESULT_COMPONENTS } from '../../utils/resultRenderer';
 
 /**
  * AnalyzePage following spec sections 18, 44, 45, 47, and 54.
  * Composes input configuration, imagery staging, natural language querying,
- * pipeline status tracking, and dynamic result rendering.
+ * pipeline status tracking, and dynamic result rendering via AnalysisOutput.
  */
 export function AnalyzePage() {
   const navigate = useNavigate();
@@ -85,8 +80,6 @@ export function AnalyzePage() {
     navigate('/reports');
   };
 
-  const ResultComponent = data?.intent ? RESULT_COMPONENTS[data.intent] : null;
-
   return (
     <PageContainer>
       <PageHeader
@@ -118,7 +111,7 @@ export function AnalyzePage() {
           />
         </div>
 
-        {/* Step 2: Main Input Section (Hidden during results view to focus on analysis) */}
+        {/* Step 2: Main Input Section (Hidden during results view) */}
         {status !== 'success' && (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
             {/* Imagery Input Column */}
@@ -222,39 +215,7 @@ export function AnalyzePage() {
         {/* Step 3: Analysis Results Stream (Rendered on success) */}
         {status === 'success' && data && (
           <div className="space-y-6">
-            <AnalysisHeader
-              intent={data.intent}
-              sessionId={data.sessionId}
-              inputConfiguration={inputConfig}
-            />
-
-            <QuerySummary
-              query={query}
-              inputConfiguration={inputConfig}
-              filesCount={files.length}
-            />
-
-            {/* Primary Analysis Result Display */}
-            {ResultComponent ? (
-              <ResultComponent {...data.componentProps} />
-            ) : (
-              <ErrorState
-                title="Unsupported Result Type"
-                message={`The backend returned intent "${data.intent}", which has no matching presentation component.`}
-              />
-            )}
-
-            {/* Extra deterministic physical measurements */}
-            {data.measurements && data.measurements.length > 0 && data.intent !== 'measurement' && (
-              <MeasurementResult measurements={data.measurements} />
-            )}
-
-            {/* Execution Trace Timeline */}
-            {data.trace && data.trace.length > 0 && (
-              <ExecutionTrace steps={data.trace} />
-            )}
-
-            {/* Post-execution workflow actions */}
+            <AnalysisOutput analysis={{ ...data, query, inputConfiguration: inputConfig, uploadedFiles: files }} />
             <AnalysisActions onNewAnalysis={handleNewAnalysis} onViewReport={handleViewReport} />
           </div>
         )}

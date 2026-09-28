@@ -6,6 +6,44 @@ const BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
  */
 export const apiClient = {
   /**
+   * Generic GET method with standardized error handling.
+   * @param {string} endpoint - API path (e.g., '/health', '/history')
+   * @param {RequestInit} [options] - Optional fetch configuration overrides
+   * @returns {Promise<any>} Response JSON
+   */
+  async get(endpoint, options = {}) {
+    const cleanBaseUrl = BASE_URL.replace(/\/+$/, '');
+    const cleanEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
+    const url = `${cleanBaseUrl}${cleanEndpoint}`;
+
+    const headers = {
+      'Content-Type': 'application/json',
+      ...options.headers,
+    };
+
+    const response = await fetch(url, {
+      method: 'GET',
+      headers,
+      ...options,
+    });
+
+    if (!response.ok) {
+      let errorData = null;
+      try {
+        errorData = await response.json();
+      } catch {
+        errorData = { message: response.statusText };
+      }
+      const error = new Error(errorData?.message || `Request failed with status ${response.status}`);
+      error.status = response.status;
+      error.data = errorData;
+      throw error;
+    }
+
+    return await response.json();
+  },
+
+  /**
    * Generic POST method with error handling.
    * @param {string} endpoint - API path (e.g., '/analyze')
    * @param {FormData|object} data - Payload data
@@ -49,3 +87,5 @@ export const apiClient = {
     return await response.json();
   },
 };
+
+export default apiClient;

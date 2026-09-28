@@ -1,17 +1,17 @@
-# Backend Data Contract: Analysis API (POST /analyze)
+# Backend Data Contract: SatQuery AI API
 
 > **PROPOSED - must be confirmed with the backend team**
 
-This document establishes the formal client-server communication contract between the SatQuery AI React frontend and the FastAPI/Python analysis orchestration pipeline.
+This document establishes the formal client-server communication contract between the SatQuery AI React frontend and the backend analysis orchestration pipeline.
 
 ---
 
-## 1. Request Specification
+## 1. Analysis Request & Response (POST /analyze)
 
 - **Endpoint**: `POST /analyze`
 - **Content-Type**: `multipart/form-data`
 
-### Form Fields
+### Request Form Fields
 
 | Field Name | Type | Required | Description |
 | :--- | :--- | :--- | :--- |
@@ -20,14 +20,7 @@ This document establishes the formal client-server communication contract betwee
 | `images` | `File` \| `File[]` | Yes | One or two binary image rasters (GeoTIFF, PNG, JPEG) |
 | `image_roles` | `string` (JSON array) | Yes | JSON string array of roles corresponding to `images` in exact order, e.g. `["single"]`, `["before", "after"]`, or `["optical", "sar"]` |
 
----
-
-## 2. Response Specification
-
-- **Status Code**: `200 OK` (success or application-level error payload), `4xx/5xx` on network/server errors
-- **Content-Type**: `application/json`
-
-### Schema
+### Response Schema (JSON)
 
 ```json
 {
@@ -75,13 +68,64 @@ This document establishes the formal client-server communication contract betwee
 }
 ```
 
-### Intent Result Payloads
+---
 
-1. **`vqa`**: `{ "question": "string", "answer": "string" }`
-2. **`captioning`**: `{ "caption": "string" }`
-3. **`grounding`**: `{ "query": "string", "boxes": [{ "x1": 0, "y1": 0, "x2": 1, "y2": 1, "label": "string", "confidence": 0.95 }] }`
-4. **`detection`**: `{ "detections": [{ "x1": 0, "y1": 0, "x2": 1, "y2": 1, "label": "string", "confidence": 0.9 }], "total": 12 }`
-5. **`segmentation`**: `{ "mask": "base64/url", "classes": [{ "name": "Water", "color": "#0284C7", "percentage": 45 }], "statistics": { ... } }`
-6. **`change_analysis`**: `{ "changeMask": "base64/url", "description": "string", "changeRegions": [ ... ] }`
-7. **`fusion`**: `{ "fusedResult": "string", "optical": { "label": "Sentinel-2" }, "sar": { "label": "Sentinel-1" } }`
-8. **`measurement`**: `{ "measurements": [{ "label": "Runway Length", "value": 3200, "unit": "m" }] }`
+## 2. System Health Check (GET /health)
+
+- **Endpoint**: `GET /health`
+- **Response**:
+```json
+{
+  "status": "ok" | "degraded" | "down",
+  "models": [
+    {
+      "name": "VQA Engine (InternVL-2)",
+      "status": "ready" | "unavailable"
+    },
+    {
+      "name": "Grounding & Detection (Grounding DINO)",
+      "status": "ready" | "unavailable"
+    },
+    {
+      "name": "Semantic Segmentation (SAM-Geo)",
+      "status": "ready" | "unavailable"
+    },
+    {
+      "name": "Change Detection (ChangeFormer)",
+      "status": "ready" | "unavailable"
+    },
+    {
+      "name": "Optical-SAR Fusion (Cross-Attention)",
+      "status": "ready" | "unavailable"
+    }
+  ]
+}
+```
+
+---
+
+## 3. Analysis History (GET /history)
+
+- **Endpoint**: `GET /history`
+- **Response**:
+```json
+{
+  "items": [
+    {
+      "session_id": "sess_8943",
+      "query": "Identify all aircraft parked on the terminal apron",
+      "intent": "detection",
+      "input_configuration": "single",
+      "created_at": "2026-09-28T16:30:00Z",
+      "status": "success" | "error"
+    }
+  ]
+}
+```
+
+---
+
+## 4. Retrieve Analysis by ID (GET /analysis/{session_id})
+
+- **Endpoint**: `GET /analysis/{session_id}`
+- **Response**: Exactly identical JSON response shape as `POST /analyze`.

@@ -1,19 +1,39 @@
 import React from 'react';
 import PageContainer from '../../components/layout/PageContainer';
 import PageHeader from '../../components/layout/PageHeader';
+import HistoryTable from '../../components/history/HistoryTable';
+import { useHistory } from '../../hooks/useHistory';
+import { useOpenAnalysis } from '../../hooks/useOpenAnalysis';
 
+/**
+ * HistoryPage following spec section 35.
+ * Displays persistent analysis records, query parameters, intent classifications,
+ * and allows reopening past analysis sessions.
+ */
 export function HistoryPage() {
+  const { status, items, error, reload } = useHistory();
+  const { loading: opening, openAnalysis } = useOpenAnalysis();
+
+  const handleSelect = (item) => {
+    if (item?.session_id && !opening) {
+      openAnalysis(item.session_id);
+    }
+  };
+
   return (
     <PageContainer>
       <PageHeader
-        title="History"
-        subtitle="Chronological log of submitted analyses and past results"
+        title="Analysis History"
+        subtitle="Chronological log of executed vision-language and spatial analysis runs"
       />
-      <div className="p-6 rounded-xl border border-border bg-white text-left shadow-xs">
-        <p className="text-sm text-text-secondary">
-          Content coming in a later phase.
-        </p>
-      </div>
+
+      <HistoryTable
+        items={items}
+        loading={status === 'loading' || opening}
+        error={error}
+        onSelect={handleSelect}
+        onRetry={reload}
+      />
     </PageContainer>
   );
 }

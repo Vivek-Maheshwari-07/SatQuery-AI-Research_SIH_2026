@@ -1,1 +1,39 @@
-/* src/styles/globals.css - Global styling and design token overrides */
+/* Global print stylesheet for SatQuery AI reports and export */
+@media print {
+  /* Hide interactive layout navigation, topbars, and action toolbars */
+  aside,
+  nav,
+  header,
+  .no-print,
+  button {
+    display: none !important;
+  }
+
+  /* Reset layout margins, padding, and constraints */
+  body,
+  html,
+  #root,
+  main {
+    background: #ffffff !important;
+    color: #000000 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Remove shadows and excessive borders for crisp physical print */
+  * {
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  /* Prevent awkward page splits inside report sections and cards */
+  .break-inside-avoid,
+  .card,
+  article,
+  section {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+}

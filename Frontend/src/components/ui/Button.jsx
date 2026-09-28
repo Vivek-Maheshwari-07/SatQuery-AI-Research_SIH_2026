@@ -25,9 +25,12 @@ export function Button({
   children,
   className = '',
   type = 'button',
+  ariaLabel,
+  'aria-label': ariaLabelProp,
   ...rest
 }) {
   const isDisabled = disabled || loading;
+  const label = ariaLabelProp || ariaLabel;
 
   const baseStyles =
     'inline-flex items-center justify-center font-medium transition-all duration-150 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:cursor-not-allowed select-none';
@@ -60,6 +63,7 @@ export function Button({
   return (
     <button
       type={type}
+      aria-label={label}
       disabled={isDisabled}
       className={`${baseStyles} ${sizeStyles[size] || sizeStyles.md} ${
         variantStyles[variant] || variantStyles.primary

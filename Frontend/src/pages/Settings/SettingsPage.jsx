@@ -1,18 +1,24 @@
 import React from 'react';
 import PageContainer from '../../components/layout/PageContainer';
 import PageHeader from '../../components/layout/PageHeader';
+import ApiConfigCard from '../../components/settings/ApiConfigCard';
+import SupportedInputSettingsCard from '../../components/settings/SupportedInputSettingsCard';
 
+/**
+ * SettingsPage following spec section 36.
+ * Displays read-only system configurations and live backend connection verification.
+ */
 export function SettingsPage() {
   return (
     <PageContainer>
       <PageHeader
-        title="Settings"
-        subtitle="Application preferences, model parameters, and platform configuration"
+        title="Settings & System Configuration"
+        subtitle="Operational endpoint configuration and supported raster sensor specifications"
       />
-      <div className="p-6 rounded-xl border border-border bg-white text-left shadow-xs">
-        <p className="text-sm text-text-secondary">
-          Content coming in a later phase.
-        </p>
+
+      <div className="space-y-6 max-w-4xl">
+        <ApiConfigCard />
+        <SupportedInputSettingsCard />
       </div>
     </PageContainer>
   );
