@@ -1,6 +1,6 @@
 # SatQuery AI — Frontend
 
-An intelligent Earth Observation (EO) and geospatial satellite analytics platform. SatQuery AI enables analysts and researchers to perform natural language visual question answering (VQA), object detection, visual grounding, segmentation, and bi-temporal change detection on satellite imagery.
+SatQuery AI is an enterprise remote sensing and Earth observation (EO) assistant designed for researchers, geospatial analysts, and defense personnel. The platform processes vision-language instructions across optical, SAR (synthetic aperture radar), and bi-temporal satellite datasets, executing Visual Question Answering (VQA), object detection, visual grounding, semantic segmentation, and change detection.
 
 ---
 
@@ -8,10 +8,11 @@ An intelligent Earth Observation (EO) and geospatial satellite analytics platfor
 
 - **Framework**: React 19 (Vite)
 - **Routing**: React Router 7
-- **Styling**: Tailwind CSS with custom geospatial theme tokens
-- **Icons**: Lucide React
+- **Styling**: Tailwind CSS with custom geospatial "Mission Control" design tokens
+- **Typography**: Self-hosted Inter Variable & JetBrains Mono Variable (`@fontsource-variable/*`)
+- **Icons**: Lucide React (Lucide icons only, no emojis or manual SVGs)
 - **Linter & Code Quality**: Oxlint
-- **Typography**: Inter
+- **Build Tool**: Vite
 
 ---
 
@@ -55,36 +56,36 @@ npm run preview
 
 ```text
 src/
-├── app/               # Application configuration, providers, and route definitions
+├── app/               # Application configuration, navigation models, providers, routes
 ├── components/
-│   ├── analysis/      # Result output stacks, execution traces, headers, and status cards
-│   ├── dashboard/     # Modular widgets for high-level system overview and metrics
-│   ├── history/       # Accessible history table and query inspection
-│   ├── imagery/       # Raster dropzone, file validation, previews, and metadata tags
+│   ├── analysis/      # Analysis header, output stack, execution trace, mode selector, confidence
+│   ├── dashboard/     # High-level overview cards, health monitor, quick-start actions
+│   ├── history/       # Accessible history table and responsive stacked cards
+│   ├── imagery/       # Raster dropzone, validation, image preview, metadata tags
 │   ├── layout/        # AppShell, Topbar, Sidebar navigation, and PageContainers
-│   ├── query/         # Natural language query input with keyboard shortcut dispatch
+│   ├── query/         # Natural language query input, suggestion chips, query summary
 │   ├── reports/       # Intelligence report preview, section wrappers, and export actions
-│   ├── results/       # Specialized intent cards (VQA, Caption, Grounding, Change, Fusion, etc.)
-│   ├── settings/      # Live API connection tester and configuration cards
-│   ├── ui/            # Reusable design primitives (Button, Card, Badge, Modal, Tabs, etc.)
-│   └── visualization/ # Canvas overlays, image viewer with zoom/pan, and coordinates
-├── context/           # React context for global analysis state
-├── hooks/             # Custom hooks (useAnalysis, useHistory, useSystemStatus, etc.)
+│   ├── results/       # Specialized intent result cards (VQA, Caption, Grounding, Change, Fusion, etc.)
+│   ├── settings/      # Live API connection tester and supported input configuration cards
+│   ├── ui/            # Reusable design primitives (Button, Card, Badge, Modal, Tabs, Select, etc.)
+│   └── visualization/ # Interactive image viewer (pan/zoom), coordinate HUD, bounding box, masks
+├── context/           # AppContext for active analysis session state
+├── hooks/             # Custom hooks (useAnalysis, useHistory, useSystemStatus, useImageUpload, etc.)
 ├── pages/             # Thin page components composing modular UI features
 ├── services/          # Pure API clients, endpoint calls, and contract documentation
-├── styles/            # Global stylesheet and media print definitions
+├── styles/            # Global stylesheet, graticule grid, and media print definitions
 └── utils/             # Formatters, schema validators, and result renderers
 ```
 
 ---
 
-## How Data Flows
+## Data Flow Architecture
 
-Data flows strictly in one unidirectional pipeline:
+Data flows strictly unidirectionally through explicit layers:
 
 $$\text{Backend API} \longrightarrow \text{Service Layer} \longrightarrow \text{Adapter} \longrightarrow \text{Custom Hook} \longrightarrow \text{Page Component} \longrightarrow \text{Presentational Props}$$
 
-1. **Backend API**: Emits standard JSON responses.
+1. **Backend API**: Emits standard JSON responses adhering to the contract.
 2. **Services (`src/services/`)**: Make HTTP requests using `api.js` and return raw backend JSON.
 3. **Adapters (`src/services/analysisAdapter.js`)**: Transform backend payloads into stable internal UI models, guaranteeing component decoupling.
 4. **Hooks (`src/hooks/`)**: Manage request lifecycle, loading flags, error boundaries, and refresh triggers.
@@ -97,17 +98,32 @@ $$\text{Backend API} \longrightarrow \text{Service Layer} \longrightarrow \text{
 
 The SatQuery frontend data contracts are documented in [CONTRACT.md](src/services/CONTRACT.md).
 
-> **Note**: The backend schema is marked as **PROPOSED** until formally validated and confirmed with the backend research team.
+> **Note**: The backend schema is currently marked as **PROPOSED** until formally validated and confirmed with the backend research team.
 
 ---
 
-## Core Design Rules
+## Design System: "Mission Control"
 
-1. **No Dummy Data**: All displayed metrics, status badges, history items, and results originate from real APIs or user actions.
-2. **One Component, One Job**: Components do not fetch data directly; they receive props and render specific visual responsibilities.
-3. **Theme Tokens Only**: Colors, borders, and shadows derive exclusively from tailored Tailwind design tokens (no arbitrary hardcoded hex values).
-4. **Icons**: Lucide React only. No manually drawn SVGs or emojis in the UI.
-5. **State Completeness**: Every data-driven component provides explicit loading, empty, and error fallback states.
+The user interface implements the **Mission Control** theme — clean, white, scientific, and trustworthy.
+
+### 1. Controlled Style Allocation
+- **Neo-Brutalism** (1px ink/primary-dark border + brutal shadow; hover: `translate(-1px, -1px)` with shadow; active: `translate(2px, 2px)` with no shadow):
+  - Primary Action Button (Analyze)
+  - ResultCard container (largest card)
+  - MeasurementResult metric tiles
+  - Selected AnalysisModeSelector tab
+- **Neo-Morphism**:
+  - Form Inputs, Textarea, Select (`shadow-inset`)
+  - IconButton and ImageViewer floating zoom toolbar (`shadow-raised`)
+  - Active Sidebar navigation item
+  - Badge status pills (`bg-*-soft` with `text-*-strong` for WCAG AA compliance)
+- **Everything Else**:
+  - Flat white surface + 1px Border (`#D9E2F0`), no shadow.
+  - Brutal shadows appear on at most one element per visual group.
+
+### 2. Geospatial Identity
+- **Graticule Background (`bg-graticule`)**: A subtle 24px faint grid behind ImageViewer, ImageUploader dropzone, and page-level EmptyState areas.
+- **Self-Hosted Typography**: Inter Variable for sans body/headers; JetBrains Mono Variable for coordinates, CRS, resolution, session IDs, bounding box coordinates, and measurement numbers.
 
 ---
 

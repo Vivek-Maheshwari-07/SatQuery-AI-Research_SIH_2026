@@ -33,31 +33,32 @@ export function Button({
   const label = ariaLabelProp || ariaLabel;
 
   const baseStyles =
-    'inline-flex items-center justify-center font-medium transition-all duration-150 rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:cursor-not-allowed select-none';
+    'inline-flex items-center justify-center font-medium transition-all duration-150 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed select-none';
 
   const sizeStyles = {
-    sm: 'text-xs px-2.5 py-1.5 gap-1.5',
-    md: 'text-sm px-4 py-2 gap-2',
-    lg: 'text-base px-5 py-2.5 gap-2.5',
+    sm: 'text-xs px-3 py-1.5 gap-1.5 min-h-[32px]',
+    md: 'text-sm px-4 py-2 gap-2 min-h-[40px]',
+    lg: 'text-base px-5 py-2.5 gap-2.5 min-h-[48px]',
   };
 
   const variantStyles = {
+    // Neo-brutalist primary button
     primary:
-      'bg-primary text-white border border-primary hover:bg-primary-dark hover:border-primary-dark focus:ring-primary shadow-sm active:translate-y-0.5 disabled:bg-slate-300 disabled:border-slate-300 disabled:text-slate-500 disabled:shadow-none disabled:translate-y-0',
+      'bg-primary text-white border border-primary-dark shadow-brutal hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-brutal-lg active:translate-x-0.5 active:translate-y-0.5 active:shadow-none disabled:bg-slate-200 disabled:border-border disabled:text-text-muted disabled:shadow-none disabled:translate-x-0 disabled:translate-y-0',
     secondary:
-      'bg-surface text-text-primary border border-border hover:bg-slate-100 hover:border-slate-300 focus:ring-primary shadow-sm active:translate-y-0.5 disabled:bg-slate-100 disabled:text-slate-400 disabled:border-slate-200 disabled:shadow-none disabled:translate-y-0',
+      'bg-surface text-text-primary border border-border hover:bg-slate-100 hover:border-slate-300 shadow-sm active:translate-y-0.5 disabled:bg-slate-100 disabled:text-text-muted disabled:border-slate-200 disabled:shadow-none disabled:translate-y-0',
     outline:
-      'bg-transparent text-text-primary border border-border hover:bg-primary-soft hover:text-primary hover:border-primary focus:ring-primary disabled:border-slate-200 disabled:text-slate-400 disabled:bg-transparent',
+      'bg-transparent text-text-primary border border-border hover:bg-primary-soft hover:text-primary hover:border-primary active:bg-primary-soft/80 disabled:border-slate-200 disabled:text-text-muted disabled:bg-transparent',
     ghost:
-      'bg-transparent text-text-secondary hover:bg-slate-100 hover:text-text-primary focus:ring-slate-400 disabled:text-slate-300 disabled:hover:bg-transparent',
+      'bg-transparent text-text-secondary hover:bg-slate-100 hover:text-text-primary active:bg-slate-200/60 disabled:text-text-muted disabled:hover:bg-transparent',
     danger:
-      'bg-danger text-white border border-danger hover:bg-red-700 hover:border-red-700 focus:ring-danger shadow-sm active:translate-y-0.5 disabled:bg-red-200 disabled:border-red-200 disabled:text-red-400 disabled:shadow-none disabled:translate-y-0',
+      'bg-danger text-white border border-danger-strong shadow-sm hover:bg-red-700 active:translate-y-0.5 disabled:bg-red-100 disabled:border-red-200 disabled:text-red-400 disabled:shadow-none disabled:translate-y-0',
   };
 
   const iconSizes = {
-    sm: 'w-3.5 h-3.5',
-    md: 'w-4 h-4',
-    lg: 'w-5 h-5',
+    sm: 'w-3.5 h-3.5 shrink-0',
+    md: 'w-4 h-4 shrink-0',
+    lg: 'w-5 h-5 shrink-0',
   };
 
   return (
@@ -77,7 +78,7 @@ export function Button({
           <Icon className={iconSizes[size] || iconSizes.md} />
         )
       )}
-      {children}
+      <span>{children}</span>
       {!loading && Icon && iconPosition === 'right' && (
         <Icon className={iconSizes[size] || iconSizes.md} />
       )}

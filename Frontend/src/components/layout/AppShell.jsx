@@ -31,6 +31,14 @@ export function AppShell({
 
   return (
     <div className="flex h-screen w-screen overflow-hidden bg-surface font-sans text-text-primary">
+      {/* Skip to main content accessibility link */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-white focus:rounded-lg focus:shadow-elevated focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-dark"
+      >
+        Skip to main content
+      </a>
+
       {/* Sidebar Navigation */}
       <Sidebar
         items={navigationItems}
@@ -49,9 +57,9 @@ export function AppShell({
           onToggleSidebar={toggleSidebar}
         />
 
-        <div className="flex-1 flex flex-col min-w-0">
+        <main id="main-content" className="flex-1 flex flex-col min-w-0">
           {children}
-        </div>
+        </main>
       </div>
     </div>
   );

@@ -2,17 +2,17 @@ import React, { useEffect, useRef } from 'react';
 
 /**
  * ChangeOverlay component following spec section 28.
- * Renders bi-temporal change detection masks with a distinct high-contrast highlight color.
+ * Renders bi-temporal change detection masks with a distinct high-contrast highlight color from theme tokens.
  *
  * @param {Object} props
  * @param {string | ImageData} props.changeMask - Base64 PNG string, image URL, or ImageData
- * @param {string} [props.color='#DC2626'] - Distinct highlight color for changed regions
+ * @param {string} [props.color='var(--color-overlay-change, #DC2626)'] - Distinct highlight color for changed regions
  * @param {number} [props.opacity=0.55] - Overlay opacity (0 to 1)
  * @param {string} [props.className='']
  */
 export function ChangeOverlay({
   changeMask,
-  color = '#DC2626',
+  color = 'var(--color-overlay-change, #DC2626)',
   opacity = 0.55,
   className = '',
 }) {

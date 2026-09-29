@@ -2,7 +2,7 @@ import React from 'react';
 
 /**
  * Multi-variant Card primitive.
- * Supports default SaaS, elevated, neo-brutalist (spec section 3), and soft neo-morphic styling.
+ * Supports default SaaS (flat white + 1px border), elevated, neo-brutalist (spec section 3), and soft neo-morphic styling.
  *
  * @param {Object} props
  * @param {'default' | 'elevated' | 'brutalist' | 'soft'} [props.variant='default']
@@ -29,25 +29,25 @@ export function Card({
   };
 
   const variantStyles = {
-    // Clean enterprise SaaS card with subtle border and crisp shadow
+    // Clean enterprise SaaS card: flat white surface + 1px Border (#D9E2F0), no shadow
     default:
-      'bg-white border border-border shadow-xs text-text-primary',
+      'bg-white border border-border text-text-primary',
 
-    // Elevated surface with refined deeper shadow
+    // Elevated surface with subtle 0 1px 3px shadow
     elevated:
       'bg-white border border-border shadow-elevated text-text-primary',
 
-    // Neo-brutalism: Strong border, clear geometry, controlled hard offset shadow, high contrast
+    // Neo-brutalism: 1px ink/primary-dark border + brutal shadow; hover/active translations
     brutalist:
-      'bg-white border-2 border-text-primary shadow-brutalist text-text-primary hover:shadow-brutalist-hover hover:translate-x-0.5 hover:translate-y-0.5',
+      'bg-white border border-ink shadow-brutal text-text-primary hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-brutal-lg active:translate-x-0.5 active:translate-y-0.5 active:shadow-none',
 
-    // Neo-morphism: Controlled depth, soft surfaces, gentle diffused shadow
+    // Neo-morphism: Controlled depth, soft surfaces, raised shadow
     soft:
-      'bg-surface border border-slate-200/80 shadow-soft text-text-primary',
+      'bg-surface border border-border shadow-raised text-text-primary',
   };
 
   const interactiveStyles = onClick
-    ? 'cursor-pointer select-none active:scale-[0.99]'
+    ? 'cursor-pointer select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2'
     : '';
 
   return (

@@ -50,9 +50,9 @@ export function GroundingResult({
     >
       <div className="space-y-4 text-left">
         {/* Referring query & metadata */}
-        <div className="flex flex-col gap-3 p-3.5 bg-surface rounded-lg border border-border">
+        <div className="flex flex-col gap-3 p-3.5 bg-surface rounded-xl border border-border">
           <div>
-            <span className="text-[11px] font-bold uppercase tracking-wider text-text-muted block mb-0.5">
+            <span className="text-[11px] font-semibold uppercase tracking-wider text-text-muted block mb-0.5">
               Target Expression
             </span>
             <p className="text-sm font-semibold text-text-primary">
@@ -71,7 +71,7 @@ export function GroundingResult({
         {image && (
           <div className="h-96 w-full rounded-lg overflow-hidden border border-border">
             <ImageViewer src={image} alt={query || 'Grounding result'}>
-              <BoundingBoxOverlay boxes={boxes} color="#155EEF" />
+              <BoundingBoxOverlay boxes={boxes} />
             </ImageViewer>
           </div>
         )}

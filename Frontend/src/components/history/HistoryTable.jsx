@@ -35,8 +35,9 @@ function getIntentBadgeConfig(intent) {
 }
 
 /**
- * HistoryTable component following spec sections 35 and 58.
- * Displays interactive, keyboard-accessible table of past analysis sessions.
+ * HistoryTable component following spec sections 35, 58, and Part 3 item 7.
+ * Sticky header, zebra-free with hairline borders, hover and focus-visible states,
+ * dates in mono font, and stacked card view on mobile.
  *
  * @param {Object} props
  * @param {Array<Object>} [props.items=[]] - History records
@@ -68,7 +69,7 @@ export function HistoryTable({
     );
   }
 
-  // 2. Loading State (Skeleton Rows)
+  // 2. Loading State (Skeleton Cards / Rows)
   if (loading) {
     return (
       <div className={`w-full bg-white rounded-xl border border-border shadow-xs overflow-hidden ${className}`}>
@@ -98,39 +99,84 @@ export function HistoryTable({
       <div className={`rounded-xl border border-border overflow-hidden ${className}`}>
         <EmptyState
           icon={History}
+          graticule={true}
           title="No analyses yet"
-          description="Analyses executed on the Analyze page will be automatically saved in your history."
+          description="Analyses executed on the Analyze page will be automatically recorded in your audit history."
         />
       </div>
     );
   }
 
-  // 4. Success State: Interactive Table
+  // 4. Success State
   return (
     <div
       className={`w-full bg-white rounded-xl border border-border shadow-xs overflow-hidden text-left ${className}`}
     >
-      <div className="overflow-x-auto">
+      {/* Mobile Stacked Cards View (< 768px) */}
+      <div className="md:hidden divide-y divide-border">
+        {items.map((item) => {
+          const intentConfig = getIntentBadgeConfig(item.intent);
+          const config = getConfigurationById(item.input_configuration);
+          const isSuccess = item.status === 'success' || !item.status;
+
+          return (
+            <button
+              key={item.session_id}
+              type="button"
+              onClick={() => onSelect?.(item)}
+              className="w-full p-4 flex flex-col gap-2.5 text-left hover:bg-slate-50 active:bg-slate-100 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
+            >
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex items-center gap-2">
+                  <Badge variant={intentConfig.variant} size="sm">
+                    {intentConfig.label}
+                  </Badge>
+                  <span className="text-[11px] text-text-muted font-medium">
+                    {config.label}
+                  </span>
+                </div>
+                <Badge variant={isSuccess ? 'success' : 'danger'} size="sm" dot>
+                  {isSuccess ? 'Completed' : 'Failed'}
+                </Badge>
+              </div>
+
+              <p className="text-sm font-semibold text-text-primary line-clamp-2">
+                {item.query || 'Visual query analysis'}
+              </p>
+
+              <div className="flex items-center justify-between text-xs text-text-muted pt-1 border-t border-slate-100 font-mono text-[11px]">
+                <span>{formatDate(item.created_at)}</span>
+                <span className="text-primary flex items-center font-sans font-medium">
+                  View Result <ChevronRight className="w-3.5 h-3.5 ml-0.5" />
+                </span>
+              </div>
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Desktop & Tablet Table View (>= 768px) */}
+      <div className="hidden md:block overflow-x-auto">
         <table className="w-full text-xs text-left">
-          <thead className="bg-surface text-text-muted uppercase font-bold text-[10px] tracking-wider border-b border-border">
+          <thead className="bg-surface text-text-muted uppercase font-semibold text-[11px] tracking-wider border-b border-border sticky top-0 z-10">
             <tr>
-              <th scope="col" className="py-3.5 px-4 font-semibold">
-                Query / Question
+              <th scope="col" className="py-3.5 px-4">
+                Query / Instruction
               </th>
-              <th scope="col" className="py-3.5 px-4 font-semibold">
+              <th scope="col" className="py-3.5 px-4">
                 Intent
               </th>
-              <th scope="col" className="py-3.5 px-4 font-semibold hidden md:table-cell">
+              <th scope="col" className="py-3.5 px-4">
                 Configuration
               </th>
-              <th scope="col" className="py-3.5 px-4 font-semibold hidden sm:table-cell">
+              <th scope="col" className="py-3.5 px-4">
                 Date & Time
               </th>
-              <th scope="col" className="py-3.5 px-4 font-semibold">
+              <th scope="col" className="py-3.5 px-4">
                 Status
               </th>
-              <th scope="col" className="py-3.5 px-4 font-semibold text-right">
-                <span className="sr-only">Open</span>
+              <th scope="col" className="py-3.5 px-4 text-right">
+                <span className="sr-only">Open Result</span>
               </th>
             </tr>
           </thead>
@@ -152,14 +198,11 @@ export function HistoryTable({
                       onSelect?.(item);
                     }
                   }}
-                  className="hover:bg-slate-50/80 cursor-pointer transition-colors focus:bg-primary-soft/30 focus:outline-none"
+                  className="hover:bg-slate-50/90 cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
                 >
                   {/* Query */}
-                  <td className="py-3.5 px-4 font-medium text-text-primary max-w-xs sm:max-w-sm md:max-w-md truncate">
+                  <td className="py-3.5 px-4 font-medium text-text-primary max-w-sm truncate">
                     <span title={item.query}>{item.query || '—'}</span>
-                    <span className="block text-[10px] text-text-muted font-mono mt-0.5 sm:hidden">
-                      {formatDate(item.created_at)}
-                    </span>
                   </td>
 
                   {/* Intent */}
@@ -170,12 +213,12 @@ export function HistoryTable({
                   </td>
 
                   {/* Configuration */}
-                  <td className="py-3.5 px-4 whitespace-nowrap text-text-secondary hidden md:table-cell font-medium">
+                  <td className="py-3.5 px-4 whitespace-nowrap text-text-secondary font-medium">
                     {config.label}
                   </td>
 
-                  {/* Date */}
-                  <td className="py-3.5 px-4 whitespace-nowrap text-text-muted hidden sm:table-cell font-mono text-[11px]">
+                  {/* Date in Mono */}
+                  <td className="py-3.5 px-4 whitespace-nowrap text-text-muted font-mono text-[11px]">
                     {formatDate(item.created_at)}
                   </td>
 

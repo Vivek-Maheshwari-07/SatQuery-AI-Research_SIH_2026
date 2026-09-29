@@ -23,7 +23,7 @@ export function SupportedInputSettingsCard({ className = '' }) {
       {/* Header */}
       <div className="flex items-center gap-2 border-b border-border pb-3">
         <Layers className="w-4 h-4 text-primary" />
-        <h2 className="text-sm font-bold text-text-primary">Supported Input Configurations</h2>
+        <h2 className="text-sm font-semibold text-text-primary">Supported Input Configurations</h2>
       </div>
 
       {/* Configurations Breakdown */}
@@ -35,7 +35,7 @@ export function SupportedInputSettingsCard({ className = '' }) {
           >
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-xs font-bold text-text-primary">{cfg.label}</span>
+                <span className="text-xs font-semibold text-text-primary">{cfg.label}</span>
                 <span className="text-[10px] font-mono text-text-muted">id: {cfg.id}</span>
               </div>
               <p className="text-[11px] text-text-secondary mt-0.5">{cfg.description}</p>
@@ -54,7 +54,7 @@ export function SupportedInputSettingsCard({ className = '' }) {
 
       {/* File Formats Table */}
       <div className="pt-2 border-t border-border space-y-2">
-        <span className="text-[11px] font-bold uppercase tracking-wider text-text-muted block">
+        <span className="text-[11px] font-semibold uppercase tracking-wider text-text-muted block">
           Accepted File Formats & MIME Types
         </span>
         <div className="divide-y divide-border border border-border rounded-lg overflow-hidden bg-surface">

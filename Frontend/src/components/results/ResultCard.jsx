@@ -95,7 +95,7 @@ export function ResultCard({
     <Card variant="brutalist" padding="md" className={`w-full ${className}`}>
       {title && (
         <div className="flex items-center justify-between gap-3 mb-4 pb-3 border-b-2 border-text-primary">
-          <div className="flex items-center gap-2.5 font-bold text-sm md:text-base text-text-primary tracking-tight">
+          <div className="flex items-center gap-2.5 font-semibold text-sm md:text-base text-text-primary tracking-tight">
             {Icon && <Icon className="w-5 h-5 text-primary flex-shrink-0" />}
             <span>{title}</span>
           </div>

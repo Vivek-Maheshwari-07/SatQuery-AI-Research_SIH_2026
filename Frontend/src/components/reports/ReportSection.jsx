@@ -22,7 +22,7 @@ export function ReportSection({
     >
       <div className="flex items-center gap-2 pb-2.5 border-b border-border">
         {Icon && <Icon className="w-4 h-4 text-primary flex-shrink-0" />}
-        <h3 className="text-xs font-bold uppercase tracking-wider text-text-primary">
+        <h3 className="text-xs font-semibold uppercase tracking-wider text-text-primary">
           {title}
         </h3>
       </div>

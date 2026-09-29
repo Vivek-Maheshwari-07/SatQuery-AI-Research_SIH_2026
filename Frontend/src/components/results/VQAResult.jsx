@@ -48,7 +48,7 @@ export function VQAResult({
         {/* Question block */}
         {question && (
           <div className="p-3.5 bg-surface rounded-lg border border-border">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-text-muted block mb-1">
+            <span className="text-[11px] font-semibold uppercase tracking-wider text-text-muted block mb-1">
               Question
             </span>
             <p className="text-sm font-medium text-text-primary leading-relaxed">
@@ -60,7 +60,7 @@ export function VQAResult({
         {/* Answer block */}
         {answer && (
           <div className="p-4 bg-primary/5 rounded-lg border-2 border-primary/20 space-y-3">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-primary block">
+            <span className="text-[11px] font-semibold uppercase tracking-wider text-primary block">
               Answer
             </span>
             <p className="text-base font-semibold text-text-primary leading-normal">

@@ -1,15 +1,111 @@
-/* Global print stylesheet for SatQuery AI reports and export */
+:root {
+  --color-primary: #155EEF;
+  --color-primary-dark: #0B3AA4;
+  --color-primary-soft: #EAF2FF;
+
+  --color-surface: #F8FAFC;
+  --color-border: #D9E2F0;
+  --color-ink: #0F172A;
+
+  --color-text-primary: #0F172A;
+  --color-text-secondary: #475569;
+  --color-text-muted: #64748B;
+
+  --color-success: #16A34A;
+  --color-success-soft: #DCFCE7;
+  --color-success-strong: #15803D;
+
+  --color-warning: #D97706;
+  --color-warning-soft: #FEF3C7;
+  --color-warning-strong: #B45309;
+
+  --color-danger: #DC2626;
+  --color-danger-soft: #FEE2E2;
+  --color-danger-strong: #B91C1C;
+
+  --color-overlay-detection: #155EEF;
+  --color-overlay-segmentation: #155EEF;
+  --color-overlay-change: #DC2626;
+
+  --font-sans: 'Inter Variable', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+/* Graticule Background: 1px lines in Border color (#D9E2F0) at ~40% opacity, 24px spacing */
+.bg-graticule {
+  background-size: 24px 24px;
+  background-image:
+    linear-gradient(to right, rgba(217, 226, 240, 0.4) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(217, 226, 240, 0.4) 1px, transparent 1px);
+}
+
+/* Neo-morphic Raised (e.g. icon buttons, floating toolbars) */
+.shadow-raised {
+  box-shadow: 6px 6px 12px rgba(15, 23, 42, 0.08), -6px -6px 12px #FFFFFF;
+}
+
+/* Neo-morphic Inset (e.g. form inputs, search fields) */
+.shadow-inset {
+  box-shadow: inset 2px 2px 4px rgba(15, 23, 42, 0.08), inset -2px -2px 4px #FFFFFF;
+}
+
+/* Subtle Elevated Shadow */
+.shadow-elevated {
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+}
+
+/* Neo-brutalist Shadows */
+.shadow-brutal {
+  box-shadow: 4px 4px 0 0 #0B3AA4;
+}
+
+.shadow-brutal-sm {
+  box-shadow: 2px 2px 0 0 #0B3AA4;
+}
+
+.shadow-brutal-lg {
+  box-shadow: 5px 5px 0 0 #0B3AA4;
+}
+
+/* Neo-brutalist Interactive Elements */
+.interactive-brutal {
+  border: 1px solid #0B3AA4;
+  box-shadow: 4px 4px 0 0 #0B3AA4;
+  transition: transform 150ms ease, box-shadow 150ms ease;
+}
+
+.interactive-brutal:hover:not(:disabled) {
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0 0 #0B3AA4;
+}
+
+.interactive-brutal:active:not(:disabled) {
+  transform: translate(2px, 2px);
+  box-shadow: none;
+}
+
+/* Respect user preference for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Global Print Stylesheet for SatQuery AI Reports */
 @media print {
-  /* Hide interactive layout navigation, topbars, and action toolbars */
   aside,
   nav,
   header,
   .no-print,
-  button {
+  button:not(.print-include) {
     display: none !important;
   }
 
-  /* Reset layout margins, padding, and constraints */
   body,
   html,
   #root,
@@ -22,13 +118,11 @@
     max-width: 100% !important;
   }
 
-  /* Remove shadows and excessive borders for crisp physical print */
   * {
     box-shadow: none !important;
     text-shadow: none !important;
   }
 
-  /* Prevent awkward page splits inside report sections and cards */
   .break-inside-avoid,
   .card,
   article,

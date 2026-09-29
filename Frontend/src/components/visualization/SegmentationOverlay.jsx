@@ -6,13 +6,13 @@ import React, { useEffect, useRef } from 'react';
  *
  * @param {Object} props
  * @param {string | ImageData} props.mask - Base64 PNG string, image URL, or ImageData
- * @param {string} [props.color='#155EEF'] - Mask tint color
+ * @param {string} [props.color='var(--color-overlay-segmentation, #155EEF)'] - Mask tint color
  * @param {number} [props.opacity=0.4] - Mask opacity (0 to 1)
  * @param {string} [props.className='']
  */
 export function SegmentationOverlay({
   mask,
-  color = '#155EEF',
+  color = 'var(--color-overlay-segmentation, #155EEF)',
   opacity = 0.4,
   className = '',
 }) {

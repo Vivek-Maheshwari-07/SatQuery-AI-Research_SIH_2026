@@ -123,7 +123,7 @@ export function EvidencePanel({
       <div className="flex items-center justify-between gap-2 mb-3 pb-2.5 border-b border-border">
         <div className="flex items-center gap-2">
           <ShieldCheck className="w-4 h-4 text-primary flex-shrink-0" />
-          <h4 className="text-xs font-bold uppercase tracking-wider text-text-primary">
+          <h4 className="text-xs font-semibold uppercase tracking-wider text-text-primary">
             {title}
           </h4>
         </div>

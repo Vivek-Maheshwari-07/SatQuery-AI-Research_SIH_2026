@@ -7,13 +7,13 @@ import React, { useState } from 'react';
  * @param {Object} props
  * @param {Array<{ x1: number, y1: number, x2: number, y2: number, label?: string, confidence?: number }>} props.boxes
  * @param {(box: object | null, index?: number) => void} [props.onBoxHover]
- * @param {string} [props.color='#155EEF']
+ * @param {string} [props.color='var(--color-overlay-detection, #155EEF)']
  * @param {string} [props.className='']
  */
 export function BoundingBoxOverlay({
   boxes,
   onBoxHover,
-  color = '#155EEF',
+  color = 'var(--color-overlay-detection, #155EEF)',
   className = '',
 }) {
   const [hoveredIdx, setHoveredIdx] = useState(null);

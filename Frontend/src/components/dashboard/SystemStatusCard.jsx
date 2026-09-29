@@ -47,7 +47,7 @@ export function SystemStatusCard({
     return (
       <Card variant="default" padding="none" className={`overflow-hidden ${className}`}>
         <div className="flex items-center justify-between p-4 border-b border-border bg-slate-50 text-left">
-          <div className="flex items-center gap-2 font-bold text-sm text-text-primary">
+          <div className="flex items-center gap-2 font-semibold text-sm text-text-primary">
             <Activity className="w-4 h-4 text-primary" />
             <span>Inference System Health</span>
           </div>
@@ -91,7 +91,7 @@ export function SystemStatusCard({
       <div className="flex items-center justify-between border-b border-border pb-3">
         <div className="flex items-center gap-2">
           <Activity className="w-4 h-4 text-primary" />
-          <h2 className="text-sm font-bold text-text-primary">
+          <h2 className="text-sm font-semibold text-text-primary">
             Inference System Health
           </h2>
         </div>
@@ -115,7 +115,7 @@ export function SystemStatusCard({
 
       {/* Model Pipelines List */}
       <div className="space-y-2">
-        <span className="text-[11px] font-bold uppercase tracking-wider text-text-muted block">
+        <span className="text-[11px] font-semibold uppercase tracking-wider text-text-muted block">
           Model Readiness
         </span>
 

@@ -29,6 +29,10 @@ export function Input({
 }) {
   const generatedId = useId();
   const inputId = id || generatedId;
+  const errorId = `${inputId}-error`;
+  const helperId = `${inputId}-helper`;
+
+  const describedBy = error ? errorId : helperText ? helperId : undefined;
 
   return (
     <div className="w-full flex flex-col gap-1.5 text-left">
@@ -52,12 +56,14 @@ export function Input({
           id={inputId}
           type={type}
           disabled={disabled}
-          className={`w-full text-sm text-text-primary bg-white border rounded-lg transition-all duration-150 py-2.5 placeholder:text-text-muted focus:outline-none focus:ring-2 disabled:bg-slate-100 disabled:text-slate-400 disabled:cursor-not-allowed ${
+          aria-invalid={!!error}
+          aria-describedby={describedBy}
+          className={`w-full text-sm text-text-primary bg-white border rounded-lg shadow-inset transition-all duration-150 py-2.5 placeholder:text-text-muted focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1 disabled:bg-slate-100 disabled:text-text-muted disabled:cursor-not-allowed ${
             LeftIcon ? 'pl-9' : 'pl-3.5'
           } ${RightIcon || error ? 'pr-9' : 'pr-3.5'} ${
             error
-              ? 'border-danger focus:border-danger focus:ring-danger/20 text-danger'
-              : 'border-border focus:border-primary focus:ring-primary/15'
+              ? 'border-danger focus:border-danger text-danger'
+              : 'border-border focus:border-primary'
           } ${className}`}
           {...rest}
         />
@@ -76,9 +82,15 @@ export function Input({
       </div>
 
       {error ? (
-        <p className="text-xs text-danger font-medium">{error}</p>
+        <p id={errorId} role="alert" className="text-xs text-danger-strong font-medium">
+          {error}
+        </p>
       ) : (
-        helperText && <p className="text-xs text-text-muted">{helperText}</p>
+        helperText && (
+          <p id={helperId} className="text-xs text-text-muted">
+            {helperText}
+          </p>
+        )
       )}
     </div>
   );

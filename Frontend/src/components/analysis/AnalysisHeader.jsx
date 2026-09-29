@@ -43,15 +43,15 @@ export function AnalysisHeader({
 
   return (
     <div
-      className={`flex flex-wrap items-center justify-between gap-3 p-4 bg-white rounded-xl border-2 border-text-primary shadow-brutalist text-left ${className}`}
+      className={`flex flex-wrap items-center justify-between gap-3 p-4 bg-white rounded-xl border border-border text-left shadow-2xs ${className}`}
     >
-      <div className="flex items-center gap-2.5">
-        <div className="w-8 h-8 rounded-lg bg-primary-soft text-primary flex items-center justify-center border border-primary/20">
+      <div className="flex items-center gap-3">
+        <div className="w-9 h-9 rounded-lg bg-primary-soft text-primary flex items-center justify-center border border-blue-200 shrink-0">
           <Sparkles className="w-4 h-4" />
         </div>
         <div>
           <div className="flex items-center gap-2">
-            <h2 className="text-sm font-bold text-text-primary">
+            <h2 className="text-sm sm:text-base font-semibold text-text-primary">
               {formattedIntent}
             </h2>
             <Badge variant="primary" size="sm">
@@ -59,8 +59,8 @@ export function AnalysisHeader({
             </Badge>
           </div>
           {sessionId && (
-            <div className="flex items-center gap-1 text-[11px] text-text-muted font-mono mt-0.5">
-              <Hash className="w-3 h-3" />
+            <div className="flex items-center gap-1 text-xs text-text-muted font-mono mt-0.5">
+              <Hash className="w-3.5 h-3.5 shrink-0" />
               <span>Session: {sessionId}</span>
             </div>
           )}
@@ -68,8 +68,8 @@ export function AnalysisHeader({
       </div>
 
       {config && (
-        <div className="flex items-center gap-1.5 px-2.5 py-1 bg-surface border border-border rounded-lg text-xs text-text-secondary font-medium">
-          <Layers className="w-3.5 h-3.5 text-text-muted" />
+        <div className="flex items-center gap-1.5 px-3 py-1.5 bg-surface border border-border rounded-lg text-xs text-text-secondary font-medium">
+          <Layers className="w-3.5 h-3.5 text-text-muted shrink-0" />
           <span>{config.label} Mode</span>
         </div>
       )}

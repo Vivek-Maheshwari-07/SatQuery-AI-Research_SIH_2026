@@ -22,14 +22,14 @@ export function SupportedInputCard({ className = '' }) {
     <Card variant="default" padding="md" className={`text-left space-y-4 ${className}`}>
       <div className="flex items-center gap-2 border-b border-border pb-3">
         <Layers className="w-4 h-4 text-primary" />
-        <h2 className="text-sm font-bold text-text-primary">
+        <h2 className="text-sm font-semibold text-text-primary">
           Supported Configurations & Modalities
         </h2>
       </div>
 
       {/* Input Configurations */}
       <div className="space-y-2">
-        <span className="text-[11px] font-bold uppercase tracking-wider text-text-muted block">
+        <span className="text-[11px] font-semibold uppercase tracking-wider text-text-muted block">
           Input Modes
         </span>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
@@ -56,7 +56,7 @@ export function SupportedInputCard({ className = '' }) {
 
       {/* Accepted Formats */}
       <div className="space-y-2 pt-1">
-        <span className="text-[11px] font-bold uppercase tracking-wider text-text-muted block">
+        <span className="text-[11px] font-semibold uppercase tracking-wider text-text-muted block">
           Accepted Formats
         </span>
         <div className="flex flex-wrap items-center gap-2">

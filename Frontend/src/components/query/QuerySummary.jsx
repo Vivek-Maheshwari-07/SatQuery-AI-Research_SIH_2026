@@ -25,7 +25,7 @@ export function QuerySummary({
       className={`p-3.5 bg-surface rounded-xl border border-border text-left space-y-2 ${className}`}
     >
       <div className="flex items-center justify-between gap-2 text-xs">
-        <div className="flex items-center gap-1.5 font-bold uppercase tracking-wider text-text-muted text-[10px]">
+        <div className="flex items-center gap-1.5 font-semibold uppercase tracking-wider text-text-muted text-[10px]">
           <MessageSquare className="w-3.5 h-3.5 text-primary" />
           <span>Executed Query</span>
         </div>

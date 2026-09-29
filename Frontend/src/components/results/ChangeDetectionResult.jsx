@@ -50,17 +50,17 @@ export function ChangeDetectionResult({
   if (imageBefore) {
     images.push({
       src: imageBefore,
-      label: 'Pre-Event (T1)',
-      alt: 'Pre-event satellite imagery',
+      label: 'Before (T1)',
+      alt: 'Pre-event satellite imagery (T1)',
     });
   }
   if (imageAfter) {
     images.push({
       src: imageAfter,
-      label: 'Post-Event (T2)',
-      alt: 'Post-event satellite imagery',
+      label: 'After (T2)',
+      alt: 'Post-event satellite imagery (T2)',
       overlays: changeMask ? (
-        <ChangeOverlay changeMask={changeMask} opacity={0.6} />
+        <ChangeOverlay changeMask={changeMask} opacity={0.65} />
       ) : null,
     });
   }
@@ -78,15 +78,26 @@ export function ChangeDetectionResult({
       <div className="space-y-4 text-left">
         {/* Dual-raster comparison viewer */}
         {images.length > 0 && (
-          <div className="w-full">
+          <div className="w-full space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-semibold text-text-secondary">
+                Spatial Alignment & Mask Overlay
+              </span>
+              {changeMask && (
+                <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-semibold bg-danger-soft text-danger-strong border border-red-200">
+                  <span className="w-2 h-2 rounded-full bg-danger"></span>
+                  Changed Area
+                </span>
+              )}
+            </div>
             <MapViewer images={images} layout="side-by-side" />
           </div>
         )}
 
         {/* Change description narrative and confidence */}
         {description && (
-          <div className="p-4 bg-surface rounded-lg border border-border space-y-3">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-text-muted block">
+          <div className="p-4 bg-surface rounded-xl border border-border space-y-3">
+            <span className="text-[11px] font-semibold uppercase tracking-wider text-text-muted block">
               Change Summary
             </span>
             <p className="text-sm md:text-base text-text-primary leading-relaxed">

@@ -1,6 +1,6 @@
 /**
  * Application configuration for satellite analysis input modes.
- * Defines required imagery count, sensor roles, and UI badges.
+ * Defines required imagery count, sensor roles, suggestions, and UI badges.
  */
 export const ANALYSIS_CONFIGURATIONS = [
   {
@@ -10,6 +10,10 @@ export const ANALYSIS_CONFIGURATIONS = [
     requiredImages: 1,
     roles: ['single'],
     roleLabels: ['Single Image'],
+    suggestions: [
+      'Describe the land-cover and major objects visible in this image.',
+      'Highlight the water body referred to in the query.',
+    ],
   },
   {
     id: 'bitemporal',
@@ -18,6 +22,10 @@ export const ANALYSIS_CONFIGURATIONS = [
     requiredImages: 2,
     roles: ['before', 'after'],
     roleLabels: ['Before (T1)', 'After (T2)'],
+    suggestions: [
+      'What changed between these two dates, and where did the change occur?',
+      'Has the built-up area increased, decreased, or remained unchanged?',
+    ],
   },
   {
     id: 'optical_sar',
@@ -25,7 +33,10 @@ export const ANALYSIS_CONFIGURATIONS = [
     description: 'Joint multi-sensor fusion combining optical visible spectrum with synthetic aperture radar',
     requiredImages: 2,
     roles: ['optical', 'sar'],
-    roleLabels: ['Optical', 'SAR'],
+    roleLabels: ['Optical Reflectance', 'SAR Backscatter'],
+    suggestions: [
+      'Use the optical and SAR images together to identify built-up and water-covered regions.',
+    ],
   },
 ];
 

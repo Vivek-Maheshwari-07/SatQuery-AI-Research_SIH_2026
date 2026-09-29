@@ -36,7 +36,7 @@ export function RecentAnalysesCard({
     return (
       <Card variant="default" padding="none" className={`overflow-hidden ${className}`}>
         <div className="flex items-center justify-between p-4 border-b border-border bg-slate-50 text-left">
-          <div className="flex items-center gap-2 font-bold text-sm text-text-primary">
+          <div className="flex items-center gap-2 font-semibold text-sm text-text-primary">
             <History className="w-4 h-4 text-primary" />
             <span>Recent Analyses</span>
           </div>
@@ -80,7 +80,7 @@ export function RecentAnalysesCard({
       <div className="flex items-center justify-between border-b border-border pb-3">
         <div className="flex items-center gap-2">
           <History className="w-4 h-4 text-primary" />
-          <h2 className="text-sm font-bold text-text-primary">Recent Analyses</h2>
+          <h2 className="text-sm font-semibold text-text-primary">Recent Analyses</h2>
         </div>
 
         {items.length > 0 && (

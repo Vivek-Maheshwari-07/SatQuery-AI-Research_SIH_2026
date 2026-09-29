@@ -4,7 +4,7 @@ import ResultCard from './ResultCard';
 
 /**
  * MeasurementResult component following spec section 30.
- * Displays deterministic physical measurements, counts, and spatial metrics.
+ * Displays deterministic physical measurements, counts, and spatial metrics in neo-brutalist tiles.
  *
  * Expected Props / Data Contract:
  * @param {Object} props
@@ -26,7 +26,7 @@ export function MeasurementResult({
 
   return (
     <ResultCard
-      title="Physical Measurements & Metrics"
+      title="Physical Measurements & Spatial Metrics"
       icon={Ruler}
       status={effectiveStatus}
       error={error}
@@ -36,18 +36,18 @@ export function MeasurementResult({
     >
       <div className="space-y-4 text-left">
         {measurements && measurements.length > 0 && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
             {measurements.map((item, idx) => (
               <div
                 key={idx}
-                className="p-3.5 bg-surface rounded-lg border border-border flex flex-col justify-between gap-1 shadow-2xs"
+                className="p-4 bg-white rounded-xl border border-ink shadow-brutal-sm hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-brutal active:translate-x-0.5 active:translate-y-0.5 active:shadow-none transition-all flex flex-col justify-between gap-1.5 text-left"
               >
-                <span className="text-[11px] font-bold uppercase tracking-wider text-text-muted">
+                <span className="text-[11px] font-semibold uppercase tracking-wider text-text-muted">
                   {item.label}
                 </span>
 
-                <div className="flex items-baseline gap-1.5 mt-1">
-                  <span className="text-xl font-bold font-mono text-text-primary">
+                <div className="flex items-baseline gap-1.5 my-0.5">
+                  <span className="text-2xl font-semibold font-mono text-text-primary tracking-tight">
                     {item.value}
                   </span>
                   {item.unit && (
@@ -58,7 +58,7 @@ export function MeasurementResult({
                 </div>
 
                 {item.description && (
-                  <p className="text-[11px] text-text-muted mt-1 leading-normal">
+                  <p className="text-[11px] text-text-muted leading-relaxed">
                     {item.description}
                   </p>
                 )}

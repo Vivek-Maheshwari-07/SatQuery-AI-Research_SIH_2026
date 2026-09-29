@@ -130,7 +130,7 @@ export function ExecutionTrace({
     >
       {/* Header */}
       <div className="flex items-center justify-between gap-2 mb-5 pb-3 border-b border-border">
-        <div className="flex items-center gap-2 font-bold text-sm text-text-primary">
+        <div className="flex items-center gap-2 font-semibold text-sm text-text-primary">
           <Workflow className="w-4 h-4 text-primary flex-shrink-0" />
           <span>Agent Execution Trace</span>
         </div>
@@ -167,11 +167,11 @@ export function ExecutionTrace({
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <div className="flex items-center gap-2">
                     {step.layer && (
-                      <span className="text-[10px] font-mono font-bold uppercase text-text-muted tracking-wider">
+                      <span className="text-[10px] font-mono font-semibold uppercase text-text-muted tracking-wider">
                         [{step.layer}]
                       </span>
                     )}
-                    <span className="text-xs font-bold text-text-primary">
+                    <span className="text-xs font-semibold text-text-primary">
                       {step.name}
                     </span>
                   </div>

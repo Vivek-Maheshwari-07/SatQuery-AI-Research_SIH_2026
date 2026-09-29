@@ -6,6 +6,7 @@ const DEFAULT_ACCEPTED_EXTENSIONS = ['.tif', '.tiff', '.png', '.jpg', '.jpeg'];
 /**
  * ImageUploader component following spec section 19.
  * Handles drag-and-drop and manual file selection with strict format validation.
+ * Features the signature Mission Control graticule backdrop.
  *
  * @param {Object} props
  * @param {Array<File>} [props.files=[]]
@@ -104,7 +105,6 @@ export function ImageUploader({
         onFilesSelected(valid);
       }
     }
-    // reset input so same file can be re-selected if removed
     if (inputRef.current) {
       inputRef.current.value = '';
     }
@@ -116,8 +116,7 @@ export function ImageUploader({
     }
   };
 
-  // Compute UI State
-  let stateStyles = 'border-border bg-white hover:bg-slate-50/70 hover:border-primary/50';
+  let stateStyles = 'border-border bg-graticule bg-surface hover:border-primary/50';
 
   if (disabled) {
     stateStyles = 'border-border/60 bg-slate-100 opacity-60 cursor-not-allowed';
@@ -128,10 +127,11 @@ export function ImageUploader({
   }
 
   return (
-    <div className={`w-full flex flex-col gap-2 ${className}`}>
+    <div className={`w-full flex flex-col gap-2 text-left ${className}`}>
       <div
         role="button"
         tabIndex={disabled ? -1 : 0}
+        aria-label="Upload satellite imagery"
         onClick={triggerBrowse}
         onKeyDown={(e) => {
           if (e.key === 'Enter' || e.key === ' ') {
@@ -143,7 +143,7 @@ export function ImageUploader({
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
-        className={`relative flex flex-col items-center justify-center p-8 md:p-10 border-2 border-dashed rounded-xl transition-all duration-150 cursor-pointer text-center select-none ${stateStyles}`}
+        className={`relative flex flex-col items-center justify-center p-6 md:p-8 border-2 border-dashed rounded-xl transition-all duration-150 cursor-pointer text-center select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${stateStyles}`}
       >
         <input
           ref={inputRef}
@@ -156,33 +156,33 @@ export function ImageUploader({
           aria-hidden="true"
         />
 
-        <div className="w-12 h-12 rounded-xl bg-primary-soft text-primary flex items-center justify-center mb-3 shadow-2xs">
+        <div className="w-10 h-10 rounded-lg bg-white border border-border text-primary shadow-raised flex items-center justify-center mb-2.5">
           {loading ? (
-            <Loader2 className="w-6 h-6 animate-spin" />
+            <Loader2 className="w-5 h-5 animate-spin" />
           ) : (
-            <UploadCloud className="w-6 h-6" />
+            <UploadCloud className="w-5 h-5" />
           )}
         </div>
 
-        <div className="space-y-1">
-          <p className="text-sm font-semibold text-text-primary">
-            <span className="text-primary hover:underline">Click to upload</span> or drag and drop imagery
+        <div className="space-y-0.5">
+          <p className="text-xs md:text-sm font-semibold text-text-primary">
+            <span className="text-primary hover:underline">Click to upload</span> or drag and drop raster
           </p>
-          <p className="text-xs text-text-secondary">
-            Supported formats: GeoTIFF (.tif, .tiff), PNG, JPEG
+          <p className="text-[11px] text-text-muted">
+            GeoTIFF (.tif, .tiff), PNG, or JPEG
           </p>
         </div>
 
         {files.length > 0 && (
-          <div className="mt-3 text-xs font-medium text-primary bg-primary-soft px-2.5 py-1 rounded-full">
+          <div className="mt-2.5 text-[11px] font-medium text-primary-dark bg-primary-soft px-2.5 py-0.5 rounded-full border border-blue-200">
             {files.length} {files.length === 1 ? 'image' : 'images'} staged
           </div>
         )}
       </div>
 
       {displayError && (
-        <div className="flex items-center gap-1.5 text-xs text-danger font-medium px-1">
-          <AlertCircle className="w-3.5 h-3.5 flex-shrink-0" />
+        <div role="alert" className="flex items-center gap-1.5 text-xs text-danger-strong font-medium px-1">
+          <AlertCircle className="w-3.5 h-3.5 shrink-0" />
           <span>{displayError}</span>
         </div>
       )}

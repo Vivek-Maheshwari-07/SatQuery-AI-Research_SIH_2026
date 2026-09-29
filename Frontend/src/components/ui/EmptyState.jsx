@@ -11,6 +11,7 @@ import Button from './Button';
  * @param {string} props.title
  * @param {string} [props.description]
  * @param {React.ReactNode | { label: string, onClick: () => void, variant?: 'primary'|'secondary'|'outline' }} [props.action]
+ * @param {boolean} [props.graticule=false]
  * @param {string} [props.className='']
  */
 export function EmptyState({
@@ -18,13 +19,16 @@ export function EmptyState({
   title,
   description,
   action,
+  graticule = false,
   className = '',
 }) {
   return (
     <div
-      className={`flex flex-col items-center justify-center text-center p-8 md:p-12 border border-dashed border-border rounded-xl bg-surface/50 ${className}`}
+      className={`flex flex-col items-center justify-center text-center p-8 md:p-12 border border-dashed border-border rounded-xl ${
+        graticule ? 'bg-graticule bg-surface' : 'bg-surface/50'
+      } ${className}`}
     >
-      <div className="w-12 h-12 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-text-muted mb-4 shadow-2xs">
+      <div className="w-12 h-12 rounded-xl bg-white border border-border shadow-raised flex items-center justify-center text-text-muted mb-4">
         <Icon className="w-6 h-6" />
       </div>
 
@@ -33,7 +37,7 @@ export function EmptyState({
       </h3>
 
       {description && (
-        <p className="text-xs md:text-sm text-text-secondary max-w-sm mb-6">
+        <p className="text-xs md:text-sm text-text-secondary max-w-sm mb-6 leading-relaxed">
           {description}
         </p>
       )}

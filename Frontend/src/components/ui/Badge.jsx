@@ -4,7 +4,7 @@ import React from 'react';
  * Generic Badge component for status, modality, and tags.
  *
  * @param {Object} props
- * @param {'success' | 'warning' | 'danger' | 'neutral' | 'primary'} [props.variant='neutral']
+ * @param {'success' | 'warning' | 'danger' | 'neutral' | 'primary' | 'optical' | 'sar' | 'multispectral'} [props.variant='neutral']
  * @param {'sm' | 'md'} [props.size='md']
  * @param {boolean} [props.dot=false]
  * @param {React.ComponentType<{ className?: string }>} [props.icon]
@@ -21,19 +21,25 @@ export function Badge({
   ...rest
 }) {
   const variantStyles = {
-    neutral: 'bg-slate-100 text-text-secondary border-slate-200',
-    primary: 'bg-primary-soft text-primary border-blue-200',
-    success: 'bg-green-50 text-success border-green-200',
-    warning: 'bg-amber-50 text-warning border-amber-200',
-    danger: 'bg-red-50 text-danger border-red-200',
+    neutral: 'bg-surface text-text-secondary border-border',
+    primary: 'bg-primary-soft text-primary-dark border-blue-200',
+    success: 'bg-success-soft text-success-strong border-green-200',
+    warning: 'bg-warning-soft text-warning-strong border-amber-200',
+    danger: 'bg-danger-soft text-danger-strong border-red-200',
+    optical: 'bg-primary-soft text-primary-dark border-blue-200',
+    sar: 'bg-warning-soft text-warning-strong border-amber-200',
+    multispectral: 'bg-success-soft text-success-strong border-green-200',
   };
 
   const dotStyles = {
-    neutral: 'bg-slate-400',
+    neutral: 'bg-text-muted',
     primary: 'bg-primary',
     success: 'bg-success',
     warning: 'bg-warning',
     danger: 'bg-danger',
+    optical: 'bg-primary',
+    sar: 'bg-warning',
+    multispectral: 'bg-success',
   };
 
   const sizeStyles = {
@@ -55,13 +61,13 @@ export function Badge({
     >
       {dot && (
         <span
-          className={`w-1.5 h-1.5 rounded-full ${
+          className={`w-1.5 h-1.5 rounded-full shrink-0 ${
             dotStyles[variant] || dotStyles.neutral
           }`}
         />
       )}
-      {Icon && <Icon className={iconSizes[size] || iconSizes.md} />}
-      {children}
+      {Icon && <Icon className={`${iconSizes[size] || iconSizes.md} shrink-0`} />}
+      <span>{children}</span>
     </span>
   );
 }

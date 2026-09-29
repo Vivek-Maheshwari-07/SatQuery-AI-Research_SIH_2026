@@ -45,7 +45,7 @@ export function ApiConfigCard({ className = '' }) {
       <div className="flex items-center justify-between border-b border-border pb-3">
         <div className="flex items-center gap-2">
           <Server className="w-4 h-4 text-primary" />
-          <h2 className="text-sm font-bold text-text-primary">API Endpoint Configuration</h2>
+          <h2 className="text-sm font-semibold text-text-primary">API Endpoint Configuration</h2>
         </div>
         <Badge variant={rawBaseUrl ? 'primary' : 'neutral'} size="sm">
           {rawBaseUrl ? 'Custom Host' : 'Default Host'}
@@ -54,7 +54,7 @@ export function ApiConfigCard({ className = '' }) {
 
       {/* Target Base URL Display */}
       <div className="space-y-1.5">
-        <label className="text-[11px] font-bold uppercase tracking-wider text-text-muted block">
+        <label className="text-[11px] font-semibold uppercase tracking-wider text-text-muted block">
           Backend Base URL
         </label>
         <div className="p-3 bg-surface rounded-lg border border-border flex items-center justify-between font-mono text-xs text-text-primary">

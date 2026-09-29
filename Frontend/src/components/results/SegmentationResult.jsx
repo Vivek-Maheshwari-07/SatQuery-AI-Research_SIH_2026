@@ -48,20 +48,20 @@ export function SegmentationResult({
       <div className="space-y-4 text-left">
         {/* Classes Legend if provided by backend */}
         {classes && Array.isArray(classes) && classes.length > 0 && (
-          <div className="flex flex-wrap items-center gap-2 p-3 bg-surface rounded-lg border border-border">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-text-muted mr-1">
+          <div className="flex flex-wrap items-center gap-2 p-3 bg-surface rounded-xl border border-border">
+            <span className="text-[11px] font-semibold uppercase tracking-wider text-text-muted mr-1">
               Classes:
             </span>
             {classes.map((cls, idx) => (
               <div
                 key={idx}
-                className="flex items-center gap-1.5 px-2 py-1 bg-white border border-border rounded text-xs text-text-primary"
+                className="flex items-center gap-1.5 px-2.5 py-1 bg-white border border-border rounded-lg text-xs text-text-primary shadow-2xs"
               >
                 <span
-                  className="w-2.5 h-2.5 rounded-full"
-                  style={{ backgroundColor: cls.color || '#155EEF' }}
+                  className="w-2.5 h-2.5 rounded-full shrink-0"
+                  style={{ backgroundColor: cls.color || 'var(--color-primary)' }}
                 />
-                <span className="font-medium">{cls.name}</span>
+                <span className="font-semibold">{cls.name}</span>
                 {cls.percentage !== undefined && (
                   <span className="text-text-muted font-mono text-[11px]">
                     {cls.percentage}
@@ -75,7 +75,7 @@ export function SegmentationResult({
 
         {/* Confidence Indicator if provided */}
         {confidence !== undefined && confidence !== null && (
-          <div className="p-3 bg-surface rounded-lg border border-border">
+          <div className="p-3 bg-surface rounded-xl border border-border">
             <ConfidenceIndicator value={confidence} />
           </div>
         )}
@@ -84,17 +84,17 @@ export function SegmentationResult({
         {image && (
           <div className="h-96 w-full rounded-lg overflow-hidden border border-border">
             <ImageViewer src={image} alt="Semantic segmentation visualization">
-              <SegmentationOverlay mask={mask} color="#155EEF" opacity={0.45} />
+              <SegmentationOverlay mask={mask} opacity={0.5} />
             </ImageViewer>
           </div>
         )}
 
         {/* Backend statistics summary if provided */}
         {statistics && typeof statistics === 'object' && (
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-1">
             {Object.entries(statistics).map(([key, val]) => (
-              <div key={key} className="p-2.5 bg-surface rounded border border-border">
-                <span className="text-[10px] uppercase font-bold text-text-muted block truncate">
+              <div key={key} className="p-3 bg-surface rounded-xl border border-border">
+                <span className="text-[10px] uppercase font-semibold text-text-muted block truncate">
                   {key.replace(/_/g, ' ')}
                 </span>
                 <span className="text-xs font-mono font-semibold text-text-primary">

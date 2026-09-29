@@ -65,10 +65,10 @@ export function ReportPreview({ analysis, className = '' }) {
       {/* 1. Report Header */}
       <div className="p-6 bg-white rounded-xl border-2 border-text-primary shadow-brutalist flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-primary block mb-1">
+          <span className="text-[10px] font-mono font-semibold uppercase tracking-widest text-primary block mb-1">
             SatQuery AI · Intelligence Report
           </span>
-          <h2 className="text-lg md:text-xl font-bold text-text-primary">
+          <h2 className="text-lg md:text-xl font-semibold text-text-primary">
             Satellite Imagery Analysis Summary
           </h2>
         </div>
@@ -109,15 +109,15 @@ export function ReportPreview({ analysis, className = '' }) {
       <ReportSection title="Input Information" icon={Layers}>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
           <div className="p-3 bg-surface rounded-lg border border-border">
-            <span className="text-[10px] font-bold uppercase text-text-muted block">Configuration</span>
+            <span className="text-[10px] font-semibold uppercase text-text-muted block">Configuration</span>
             <span className="font-semibold text-text-primary">{config.label}</span>
           </div>
           <div className="p-3 bg-surface rounded-lg border border-border">
-            <span className="text-[10px] font-bold uppercase text-text-muted block">Raster Count</span>
+            <span className="text-[10px] font-semibold uppercase text-text-muted block">Raster Count</span>
             <span className="font-semibold text-text-primary font-mono">{imageCount} {imageCount === 1 ? 'file' : 'files'}</span>
           </div>
           <div className="p-3 bg-surface rounded-lg border border-border">
-            <span className="text-[10px] font-bold uppercase text-text-muted block">Assigned Sensor Roles</span>
+            <span className="text-[10px] font-semibold uppercase text-text-muted block">Assigned Sensor Roles</span>
             <span className="font-semibold text-text-primary">{config.roleLabels.join(', ')}</span>
           </div>
         </div>

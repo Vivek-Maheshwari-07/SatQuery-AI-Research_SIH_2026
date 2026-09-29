@@ -55,11 +55,11 @@ export function ConfidenceIndicator({
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="font-mono font-bold text-text-primary">
+          <span className="font-mono font-semibold text-text-primary">
             {percentage}%
           </span>
           <span
-            className={`px-1.5 py-0.5 text-[10px] font-bold uppercase rounded border ${levelBadgeClass}`}
+            className={`px-1.5 py-0.5 text-[10px] font-semibold uppercase rounded border ${levelBadgeClass}`}
           >
             {levelText}
           </span>

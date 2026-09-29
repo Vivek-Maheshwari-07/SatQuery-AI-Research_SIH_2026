@@ -35,11 +35,11 @@ export function FusionResult({
   const effectiveStatus = status || (hasData ? 'success' : 'empty');
 
   const opticalSrc = typeof optical === 'string' ? optical : optical?.src;
-  const opticalLabel = typeof optical === 'object' ? optical?.label : 'Visible Spectrum';
+  const opticalLabel = typeof optical === 'object' ? optical?.label : 'Optical Reflectance';
   const opticalDesc = typeof optical === 'object' ? optical?.description : null;
 
   const sarSrc = typeof sar === 'string' ? sar : sar?.src;
-  const sarLabel = typeof sar === 'object' ? sar?.label : 'Synthetic Aperture Radar';
+  const sarLabel = typeof sar === 'object' ? sar?.label : 'SAR Backscatter';
   const sarDesc = typeof sar === 'object' ? sar?.description : null;
 
   const fusedText =
@@ -62,23 +62,23 @@ export function FusionResult({
       className={className}
     >
       <div className="space-y-6 text-left">
-        {/* Multi-modal Evidence Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* 1. Optical Evidence */}
+        {/* Multi-modal Evidence Grid: side-by-side on desktop, stacked on mobile */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          {/* 1. Optical Panel */}
           <div className="p-3.5 bg-surface rounded-xl border border-border flex flex-col gap-2.5">
             <div className="flex items-center justify-between gap-2">
-              <span className="text-xs font-bold text-text-primary">
-                Optical Evidence
+              <span className="text-xs font-semibold text-text-primary">
+                Optical Reflectance
               </span>
               <ModalityBadge modality="Optical" size="sm" />
             </div>
 
             {opticalSrc ? (
-              <div className="h-64 w-full rounded-lg overflow-hidden border border-border">
-                <ImageViewer src={opticalSrc} alt="Optical Evidence Raster" />
+              <div className="h-64 w-full rounded-lg overflow-hidden border border-border bg-slate-900">
+                <ImageViewer src={opticalSrc} alt="Optical Reflectance Raster" />
               </div>
             ) : (
-              <div className="h-64 w-full rounded-lg bg-slate-100 flex items-center justify-center text-xs text-text-muted">
+              <div className="h-64 w-full rounded-lg bg-slate-100 border border-border flex items-center justify-center text-xs text-text-muted">
                 No optical raster provided
               </div>
             )}
@@ -89,22 +89,22 @@ export function FusionResult({
             </div>
           </div>
 
-          {/* 2. SAR Evidence (Radar Screen High-Contrast Theme) */}
-          <div className="p-3.5 bg-slate-950 rounded-xl border-2 border-amber-500/40 flex flex-col gap-2.5 text-slate-100 shadow-md">
+          {/* 2. SAR Panel: Neutral dark-gray frame so it is never mistaken for RGB */}
+          <div className="p-3.5 bg-slate-900 rounded-xl border border-slate-700 flex flex-col gap-2.5 text-slate-100 shadow-sm">
             <div className="flex items-center justify-between gap-2">
-              <div className="flex items-center gap-1.5 text-xs font-bold text-amber-400">
-                <Radio className="w-3.5 h-3.5 animate-pulse" />
-                <span>SAR Evidence</span>
+              <div className="flex items-center gap-1.5 text-xs font-semibold text-amber-300">
+                <Radio className="w-3.5 h-3.5" />
+                <span>SAR Backscatter</span>
               </div>
               <ModalityBadge modality="SAR" size="sm" />
             </div>
 
             {sarSrc ? (
-              <div className="h-64 w-full rounded-lg overflow-hidden border border-amber-500/30">
-                <ImageViewer src={sarSrc} alt="SAR Radar Raster" />
+              <div className="h-64 w-full rounded-lg overflow-hidden border border-slate-700 bg-slate-950">
+                <ImageViewer src={sarSrc} alt="SAR Backscatter Radar Raster" />
               </div>
             ) : (
-              <div className="h-64 w-full rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center text-xs text-slate-400">
+              <div className="h-64 w-full rounded-lg bg-slate-950 border border-slate-800 flex items-center justify-center text-xs text-slate-400">
                 No SAR raster provided
               </div>
             )}
@@ -116,25 +116,25 @@ export function FusionResult({
           </div>
         </div>
 
-        {/* 3. Joint Analysis Narrative and Confidence */}
+        {/* 3. Joint Analysis Full Width Below */}
         {fusedText && (
-          <div className="p-4 bg-primary/5 rounded-xl border-2 border-primary/20 space-y-3">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-primary block">
+          <div className="p-4 bg-primary-soft/50 rounded-xl border border-blue-200 space-y-3">
+            <span className="text-[11px] font-semibold uppercase tracking-wider text-primary-dark block">
               Joint Analysis
             </span>
-            <p className="text-sm md:text-base font-medium text-text-primary leading-relaxed">
+            <p className="text-sm md:text-base text-text-primary leading-relaxed">
               {fusedText}
             </p>
 
             {confidence !== undefined && confidence !== null && (
-              <div className="pt-3 border-t border-primary/15">
+              <div className="pt-3 border-t border-blue-200/60">
                 <ConfidenceIndicator value={confidence} />
               </div>
             )}
           </div>
         )}
 
-        {/* Evidence Panel: rendered only if evidence prop provided */}
+        {/* Evidence Panel */}
         {hasEvidence && (
           <div className="pt-2">
             <EvidencePanel evidence={evidence} />

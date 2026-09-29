@@ -24,7 +24,7 @@ export function PageHeader({
     >
       <div className="flex flex-col gap-1 text-left">
         <div className="flex items-center gap-3 flex-wrap">
-          <h1 className="text-xl sm:text-2xl font-bold text-text-primary tracking-tight">
+          <h1 className="text-xl sm:text-2xl font-semibold text-text-primary tracking-tight">
             {title}
           </h1>
           {badge && <div>{badge}</div>}

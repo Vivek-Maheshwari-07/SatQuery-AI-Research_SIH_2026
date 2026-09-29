@@ -35,7 +35,7 @@ export function CaptionResult({
       className={className}
     >
       <div className="p-4 bg-surface rounded-lg border border-border text-left space-y-3">
-        <span className="text-[11px] font-bold uppercase tracking-wider text-text-muted block">
+        <span className="text-[11px] font-semibold uppercase tracking-wider text-text-muted block">
           Scene Description
         </span>
         <p className="text-sm md:text-base text-text-primary leading-relaxed">

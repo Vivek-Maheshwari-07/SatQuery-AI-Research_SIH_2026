@@ -30,7 +30,7 @@ export function AnalysisStatus({
           <Loader2 className="w-5 h-5 animate-spin" />
         </div>
         <div>
-          <h3 className="text-sm font-bold text-text-primary">
+          <h3 className="text-sm font-semibold text-text-primary">
             Analyzing Imagery
           </h3>
           <p className="text-xs text-text-secondary mt-0.5">

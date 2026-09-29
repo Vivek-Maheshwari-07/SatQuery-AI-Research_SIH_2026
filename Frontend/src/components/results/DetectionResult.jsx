@@ -45,13 +45,13 @@ export function DetectionResult({
     >
       <div className="space-y-4 text-left">
         {/* Detection Summary Header */}
-        <div className="flex flex-col gap-3 p-3.5 bg-surface rounded-lg border border-border">
+        <div className="flex flex-col gap-3 p-3.5 bg-surface rounded-xl border border-border">
           {total !== undefined && (
             <div>
-              <span className="text-[11px] font-bold uppercase tracking-wider text-text-muted block">
-                Total Detected
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-text-muted block">
+                Total Detected Objects
               </span>
-              <span className="text-xl font-bold font-mono text-text-primary">
+              <span className="text-2xl font-semibold font-mono text-text-primary">
                 {total}
               </span>
             </div>
@@ -68,7 +68,7 @@ export function DetectionResult({
         {image && (
           <div className="h-96 w-full rounded-lg overflow-hidden border border-border">
             <ImageViewer src={image} alt="Object detection visualization">
-              <BoundingBoxOverlay boxes={detections} color="#155EEF" />
+              <BoundingBoxOverlay boxes={detections} />
             </ImageViewer>
           </div>
         )}
